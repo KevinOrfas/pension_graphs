@@ -1,10 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="">
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class=""> <!--<![endif]-->
   <head>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    <title>BrewinDolphin Calculator</title>
+    <title>Pension Calculator</title>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css styles/vendor.css -->
@@ -14,38 +15,124 @@
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <!-- <link rel="stylesheet" href="styles/jquery-ui.css"> -->
     <!-- endbuild -->
 
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
+    
   </head>
   <body>
     <!--[if lt IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
+    <!-- <div class="navbar navbar-default">
+      <div class="container-fluid">
+        <h3 class="text-muted">PensionCalculator</h3>
+      </div>
+    </div> -->
     <div class="container-fluid">
-      <div class="header">
-       <!--  <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul> -->
-        <h3 class="text-muted">BrewinDolphin Calculator</h3>
-      </div>
-
       <div class="row">
-        <div class="col-lg-4">
-          
+        <div class="col-xs-12">
+              <h1>My pension scheme</h1>
         </div>
-        <div class="col-lg-8"></div>
       </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <form accept-charset="UTF-8" action="/client/sign-up/process/try-nutmeg/pension" class="" id="pension_form" method="post">
+            <!-- Section: set timeframe -->
+            <section class="row well">
+              <div class="col-xs-12">
+                <h3 class="number-title">Set a timeframe</h3>
+                <p>When do you plan to start drawing income from your pension? You must be 55+ at that point.</p>
+                <div class="row">
+                  <div class="col-xs-12 col-md-8">
+                      <label for="years">Years</label>
+                      <input type="range" id="years" name="years" value="30">
+                  </div>
+                  <div class="col-xs-12 col-md-4 valign">
+                    <span>£&nbsp;</span> <input id="years-text" value="" type="text">
+                  </div>
+                </div> <!-- end of row -->
+                <div class="row">
+                  <div class="col-xs-12">
+                    <p>About <span id="yearsOutput">__</span> years from now, in <span id="until">__,</span> when you're <span id="futureAge">__</span>
+                    </p>
+                  </div>
+                </div> <!-- end of row -->
+              </div> <!-- end of first column -->
+            </section><!-- end set timeframe -->
 
-      <div class="footer">
+            <!-- Section: Pension pot -->
+            <section class="row well">
+              <div class="col-xs-12">
+                  <h3 class="number-title">Pension Pot</h3>
+                  <p>Your final pension pot</p>
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <label for="pension-size">Size of Pension</label>
+                      <input type="range" id="pension-size" name="pension-size" min="0" max="1000000" value="200000">
+                    </div>
+                     <div class="col-xs-4 valign">
+                        <span>£&nbsp;</span> <input id="pension-size-text" value="200000" type="text">
+                     </div>
+                  </div>
+              </div>
+            </section> <!-- end of pension pot -->
 
+            <!-- Section: After tax annual pension spending -->
+            <section class="row well">
+              <div class="col-xs-12">
+                  <h3 class="number-title">After tax annual pension spending</h3>
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <label for="pension-size">Annual Pension</label>
+                      <input type="range" id="pension-annual" name="pension-annual" min="0" max="1000000" value="200000">
+                    </div>
+                     <div class="col-xs-4 valign">
+                        <span>£&nbsp;</span> <input id="pension-annual-text" value="200000" type="text">
+                     </div>
+                  </div>
+              </div>
+            </section> <!-- end of pension pot -->
+
+            <!-- Section: Dropdown -->
+            <section class="row well">
+              <div class="col-xs-12">
+                <h3 class="number-title">Portfolio type</h3>
+                <div class="row">
+                   <div class="col-xs-12">
+                    <select name="portfolio-type" id="portfolio-type">
+                     <option value="cash-portfolio">Cash portfolio</option>
+                     <option value="gilts-portfolio">Gilts portfolio</option>
+                     <option value="low-investment-risk">Portfolio with very low investment risk</option>
+                     <option value="moderate-investment-risk">Portfolio with moderate investment risk</option>
+                     <option value="high-investment-risk">Portfolio with high investment risk</option>
+                     <option value="uk-equity-portfolio">UK equity portfolio</option>
+                     <option value="global-equity-portfolio">Global equity portfolio</option>
+                     <option value="buy-to-let">Buy to let</option>
+                    </select>
+                    <button type="button" onclick="portfolioOptions()">Lock me</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </form> <!-- end of form -->
+        </div> <!-- end of form's column -->
+      </div> <!-- end of form's row -->
+      <div class="row">
+            <div class="col-md-1"><div class="letterP4">Amount in 000's of pounds</div></div>
+            <!--div class="col-md-6"><canvas id="trChart" width="660" height="400"></canvas></div-->                
+            <div class="col-md-4"><canvas id="trChart" width="500" height="400"></canvas></div>                
+            <div class="col-md-3" style="float: right;vertical-align:middle;"><div id="legendText"></div></div>
       </div>
-    </div>
+      <div class="row">
+        <canvas id="myChart" width="400" height="400"></canvas>
+      </div>
+    </div> <!-- end of container fluid -->
+    
+    
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
@@ -56,32 +143,129 @@
       r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
       ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>
+    
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/modernizr/Modernizr.js"></script>
-    <script src="/bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js"></script>
+    <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+   <!--  // <script src="/bower_components/Chartjs/Chart.js"></script> -->
     <!-- endbower -->
     <!-- endbuild -->
 
-        <!-- build:js scripts/plugins.js -->
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
-        <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
-        <!-- endbuild -->
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/vendor/Chart.js"></script>
+    <script src="scripts/main.js"></script>
+    <script>
+    function createChart() { 
+      'use strict';
+      var labs = [], data1 = [], data2 = [], median = [], data3 = [], data4 = [];
+      var timePeriodsPerYear = 4;
 
-        <!-- build:js scripts/main.js -->
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
+      labs[0] = 0;
+      data1[0] = initialValue;
+      data2[0] = initialValue;
+      median[0] = initialValue;
+      data3[0] = initialValue;
+      data4[0] = initialValue;
+
+      for (var i = 1; i <= 100; i++) {
+         if ((i / timePeriodsPerYear) % 5 === 0) {
+            labs[i] = i / timePeriodsPerYear;
+         } else {
+            labs[i] = '';
+            data1[i] = monteC[i - 1][4];
+            data2[i] = monteC[i - 1][3];
+            median[i] = monteC[i - 1][2];
+            data3[i] = monteC[i - 1][1];
+            data4[i] = monteC[i - 1][0];
+          }
+      }
+  
+    var cht = document.getElementById('trChart');
+    var ctx = cht.getContext('2d');
+    var data = { 
+          labels: labs,
+          datasets: [
+          {
+            label: 'Good - 15%',
+            fillColor: 'rgba(50,200,80,0.9)',
+            strokeColor: 'rgba(50,200,80,0.9)',
+            pointColor: 'rgba(50,200,80,0.9)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(220,220,220,1)',
+            data: data1
+          },
+          {
+             label: 'Expected - 60%',
+             fillColor: 'rgba(50,240,80,0.9)',
+             strokeColor: 'rgba(50,240,80,0.9)',
+             pointColor: 'rgba(50,240,80,0.9)',
+             pointStrokeColor: '#fff',
+             pointHighlightFill: '#fff',
+             pointHighlightStroke: 'rgba(151,187,205,1)',
+             data: data2
+          },
+          {
+            label: 'Median',
+            fillColor: 'rgba(151,151,151,0)',
+            strokeColor: 'rgba(180,180,200,1)',
+            pointColor: 'rgba(151,187,205,1)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(151,187,205,1)',
+            data: median
+          },
+          {
+            label: 'Poor - 15%',
+            fillColor: 'rgba(151,151,151,1.0)',
+            strokeColor: 'rgba(151,151,151,1.0)',
+            pointColor: 'rgba(151,187,205,1)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(151,187,205,1)',
+            data: data3
+          },
+          {
+            label: 'Very Poor 5%',
+            fillColor: 'rgba(255,255,255,0.9)',
+            strokeColor: 'rgba(250,70,80,1)',
+            pointColor: 'rgba(151,187,205,1)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(151,187,205,1)',
+            data: data4
+          }
+        ]
+      };
+  
+      // console.log(monteC);
+      new Chart(ctx).Line(data, {
+              bezierCurve: false,
+              pointDot : false,
+              multiTooltipTemplate: '',
+              scaleStartValue: 0
+      });
+
+  // and append it to your page somewhere
+  // document.getElementById('legendText').innerHTML = lineChart.generateLegend();
+  // alert(lineChart.generateLegend())
+  // legend(document.getElementById('legendText'), data);
+
+  // updateRiskText();
+}
+
+createChart();
+
+</script>
+
+    
+    <!-- <script src="scripts/slider.js"></script>
+    // <script src="scripts/slider-contribution.js"></script>
+    // <script src="scripts/dropdown.js"></script> -->
+    <!-- endbuild -->
+    
+   
 </body>
 </html>

@@ -6,6 +6,15 @@ var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
+gulp.task('fileinclude', function() {
+  gulp.src(['**/*.html'])
+    .pipe(fileinclude({
+      prefix: '@@',
+      basepath: '@file'
+    }))
+    .pipe(gulp.dest('dist/'));
+});
+
 gulp.task('styles', function () {
   return gulp.src('app/styles/main.scss')
     .pipe($.sass({
@@ -21,7 +30,7 @@ gulp.task('styles', function () {
 });
 
 gulp.task('jshint', function () {
-  return gulp.src('app/scripts/**/*.js')
+  return gulp.src(['app/scripts/**/*.js', '!app/scripts/vendor/**/*.js'])
     .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
@@ -89,8 +98,11 @@ gulp.task('serve', ['styles', 'fonts'], function () {
     'app/images/**/*'
   ]).on('change', reload);
 
+  gulp.watch(['app/*.html'], ['html', reload]);
+
   gulp.watch('app/styles/**/*.scss', ['styles', reload]);
   gulp.watch('app/scripts/**/*.js', ['jshint', reload]);
+
   gulp.watch('bower.json', ['wiredep', 'fonts', reload]);
 });
 
@@ -112,7 +124,7 @@ gulp.task('wiredep', function () {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['jshint', 'html', 'images', 'fonts', 'extras'], function () {
+gulp.task('build', ['jshint', 'html', 'images', 'fonts', 'extras', 'fileinclude'], function () {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 

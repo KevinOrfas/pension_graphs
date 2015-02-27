@@ -91,12 +91,12 @@ gulp.task('serve', ['styles', 'fonts'], function () {
   });
 
   // watch for changes
-  gulp.watch([
-    'app/*.html',
-    '.tmp/styles/**/*.css',
-    'app/scripts/**/*.js',
-    'app/images/**/*'
-  ]).on('change', reload);
+  // gulp.watch([
+  //   'app/*.html',
+  //   '.tmp/styles/**/*.css',
+  //   'app/scripts/**/*.js',
+  //   'app/images/**/*'
+  // ]).on('change', reload);
 
   gulp.watch(['app/*.html'], ['html', reload]);
 

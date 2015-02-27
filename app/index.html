@@ -157,115 +157,20 @@
     <script src="scripts/vendor/Chart.js"></script>
     <script src="scripts/main.js"></script>
     <script>
-    function createChart() { 
-      'use strict';
-      var labs = [], data1 = [], data2 = [], median = [], data3 = [], data4 = [];
-      var timePeriodsPerYear = 4;
-
-      labs[0] = 0;
-      data1[0] = initialValue;
-      data2[0] = initialValue;
-      median[0] = initialValue;
-      data3[0] = initialValue;
-      data4[0] = initialValue;
-
-      for (var i = 1; i <= 100; i++) {
-         if ((i / timePeriodsPerYear) % 5 === 0) {
-            labs[i] = i / timePeriodsPerYear;
-         } else {
-            labs[i] = '';
-            data1[i] = monteC[i - 1][4];
-            data2[i] = monteC[i - 1][3];
-            median[i] = monteC[i - 1][2];
-            data3[i] = monteC[i - 1][1];
-            data4[i] = monteC[i - 1][0];
-          }
-      }
-  
-    var cht = document.getElementById('trChart');
-    var ctx = cht.getContext('2d');
-    var data = { 
-          labels: labs,
-          datasets: [
-          {
-            label: 'Good - 15%',
-            fillColor: 'rgba(50,200,80,0.9)',
-            strokeColor: 'rgba(50,200,80,0.9)',
-            pointColor: 'rgba(50,200,80,0.9)',
-            pointStrokeColor: '#fff',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(220,220,220,1)',
-            data: data1
-          },
-          {
-             label: 'Expected - 60%',
-             fillColor: 'rgba(50,240,80,0.9)',
-             strokeColor: 'rgba(50,240,80,0.9)',
-             pointColor: 'rgba(50,240,80,0.9)',
-             pointStrokeColor: '#fff',
-             pointHighlightFill: '#fff',
-             pointHighlightStroke: 'rgba(151,187,205,1)',
-             data: data2
-          },
-          {
-            label: 'Median',
-            fillColor: 'rgba(151,151,151,0)',
-            strokeColor: 'rgba(180,180,200,1)',
-            pointColor: 'rgba(151,187,205,1)',
-            pointStrokeColor: '#fff',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(151,187,205,1)',
-            data: median
-          },
-          {
-            label: 'Poor - 15%',
-            fillColor: 'rgba(151,151,151,1.0)',
-            strokeColor: 'rgba(151,151,151,1.0)',
-            pointColor: 'rgba(151,187,205,1)',
-            pointStrokeColor: '#fff',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(151,187,205,1)',
-            data: data3
-          },
-          {
-            label: 'Very Poor 5%',
-            fillColor: 'rgba(255,255,255,0.9)',
-            strokeColor: 'rgba(250,70,80,1)',
-            pointColor: 'rgba(151,187,205,1)',
-            pointStrokeColor: '#fff',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(151,187,205,1)',
-            data: data4
-          }
-        ]
-      };
-  
-      // console.log(monteC);
-      new Chart(ctx).Line(data, {
-              bezierCurve: false,
-              pointDot : false,
-              multiTooltipTemplate: '',
-              scaleStartValue: 0
-      });
-
-  // and append it to your page somewhere
-  // document.getElementById('legendText').innerHTML = lineChart.generateLegend();
-  // alert(lineChart.generateLegend())
-  // legend(document.getElementById('legendText'), data);
-
-  // updateRiskText();
-}
-
-createChart();
-
-</script>
-
-    
+      
+      var cht = document.getElementById('trChart');
+      var ctx = cht.getContext('2d');
+      var lineChart = new Chart(ctx).Line(barData,{
+                bezierCurve: false,
+                pointDot : false,
+                multiTooltipTemplate: '',
+                scaleStartValue: 0
+            });
+    </script>
     <!-- <script src="scripts/slider.js"></script>
     // <script src="scripts/slider-contribution.js"></script>
     // <script src="scripts/dropdown.js"></script> -->
     <!-- endbuild -->
-    
-   
+
 </body>
 </html>

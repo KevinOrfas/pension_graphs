@@ -131,7 +131,7 @@ function monteCarlo(initialValue, annualOutflow, monthlyReturn, monthlyStdDev) {
         result[m] = v;
     }
 
-    console.log(result);
+    // console.log(result);
     return result;
 
 }
@@ -165,33 +165,24 @@ function contribution(){
   });
 }
 
-
 contribution();
-// yearsText();
 
-
-// var marginalTaxRate, 
-//  longTermReturn,
-//  longTermInflation,
-//  inflationAdjustRerurn, 
-//  annualVolatility;
 var type, getIndex, realRet, stDev, infl, monthlyRet, monthlySd, initialValue, annualDrawdown;
-var monteC;
+var monteC = [];
 initialValue = 100;
 annualDrawdown = 5;
-var getValue = 'cash-portfolio';
-// var lineChart;
+var getValue = 'gilts-portfolio';
 
-var params;
 function portfolioOptions() {
   'use strict';
     getIndex = document.getElementById('portfolio-type').selectedIndex;
     getValue = document.getElementsByTagName('option')[getIndex].value;
-    switch (getValue.toString()) {
+    console.log(getValue.toString());
+    switch ('cash-portfolio') {
       case 'cash-portfolio':
           type = 'Cash portfolio';
-          realRet = 0.2;
-            stDev = 0.6;
+          realRet = 0.0;
+            stDev = 0.0001;
           break;
       case 'gilts-portfolio':
           type = 'Gilts portfolio';
@@ -239,100 +230,74 @@ function portfolioOptions() {
   return params;
 }
 
-params = portfolioOptions();
-monteC = monteCarlo(params[0],params[1], params[2], params[3]);
+var paramss = portfolioOptions();
+console.log(paramss[3]);
+monteC = monteCarlo(paramss[0],paramss[1], paramss[2], paramss[3]);
 console.log(monteC);
 
-// function createChart() { 
-//   'use strict';
-//   var labs = [], data1 = [], data2 = [], median = [], data3 = [], data4 = [];
-//   var timePeriodsPerYear = 4;
+var labs = [], data1 = [], data2 = [], median = [], data3 = [], data4 = [];
+var timePeriodsPerYear = 4;
 
-//   for (var i = 1; i <= 100; i++) {
-//      if ((i / timePeriodsPerYear) % 5 === 0) {
-//         labs[i] = i / timePeriodsPerYear;
-//      } else {
-//         labs[i] = '';
-//         data1[i] = monteC[i - 1][4];
-//         data2[i] = monteC[i - 1][3];
-//         median[i] = monteC[i - 1][2];
-//         data3[i] = monteC[i - 1][1];
-//         data4[i] = monteC[i - 1][0];
-//       }
-//   }
+function createChart() {
+      'use strict';
+      labs[0] = 0;
+      data1[0] = initialValue;
+      data2[0] = initialValue;
+      median[0] = initialValue;
+      data3[0] = initialValue;
+      data4[0] = initialValue;
 
-//   var cht = document.getElementById('trChart');
-//   var ctx = cht.getContext('2d');
-//   var data = { 
-//     labels: labs,
-//     datasets: [
-//       {
-//         label: 'Good - 15%',
-//         fillColor: 'rgba(50,200,80,0.9)',
-//         strokeColor: 'rgba(50,200,80,0.9)',
-//         pointColor: 'rgba(50,200,80,0.9)',
-//         pointStrokeColor: '#fff',
-//         pointHighlightFill: '#fff',
-//         pointHighlightStroke: 'rgba(220,220,220,1)',
-//         data: data1
-//       },
-//       {
-//          label: 'Expected - 60%',
-//          fillColor: 'rgba(50,240,80,0.9)',
-//          strokeColor: 'rgba(50,240,80,0.9)',
-//          pointColor: 'rgba(50,240,80,0.9)',
-//          pointStrokeColor: '#fff',
-//          pointHighlightFill: '#fff',
-//          pointHighlightStroke: 'rgba(151,187,205,1)',
-//          data: data2
-//       },
-//       {
-//         label: 'Median',
-//         fillColor: 'rgba(151,151,151,0)',
-//         strokeColor: 'rgba(180,180,200,1)',
-//         pointColor: 'rgba(151,187,205,1)',
-//         pointStrokeColor: '#fff',
-//         pointHighlightFill: '#fff',
-//         pointHighlightStroke: 'rgba(151,187,205,1)',
-//         data: median
-//       },
-//       {
-//         label: 'Poor - 15%',
-//         fillColor: 'rgba(151,151,151,1.0)',
-//         strokeColor: 'rgba(151,151,151,1.0)',
-//         pointColor: 'rgba(151,187,205,1)',
-//         pointStrokeColor: '#fff',
-//         pointHighlightFill: '#fff',
-//         pointHighlightStroke: 'rgba(151,187,205,1)',
-//         data: data3
-//       },
-//       {
-//         label: 'Very Poor 5%',
-//         fillColor: 'rgba(255,255,255,0.9)',
-//         strokeColor: 'rgba(250,70,80,1)',
-//         pointColor: 'rgba(151,187,205,1)',
-//         pointStrokeColor: '#fff',
-//         pointHighlightFill: '#fff',
-//         pointHighlightStroke: 'rgba(151,187,205,1)',
-//         data: data4
-//       }
-//     ]
-//   };
+      for (var i = 1; i <= 100; i++) {
+         if ((i / timePeriodsPerYear) % 5 === 0) {
+            labs[i] = i / timePeriodsPerYear;
+         } else {
+            labs[i] = '';
+            data1[i] = monteC[i - 1][3];
+            data2[i] = monteC[i - 1][3];
+            median[i] = monteC[i - 1][2];
+            data3[i] = monteC[i - 1][1];
+            data4[i] = monteC[i - 1][0];
+          }
+      }
 
-  
-//   new Chart(ctx).Line(data, {
-//           bezierCurve: false,
-//           pointDot : false,
-//           multiTooltipTemplate: '',
-//           scaleStartValue: 0
-//   });
+      console.log(data1);
+      console.log(data2);
+      console.log(median);
+      console.log(data3);
+      console.log(data4);
 
-  //and append it to your page somewhere
-  //document.getElementById("legendText").innerHTML = lineChart.generateLegend();
-  //alert(lineChart.generateLegend())
-  // legend(document.getElementById('legendText'), data);
+    var graphData = [data1, data2, data3];
+    return graphData;
+}
 
-  // updateRiskText();
-// }
+var datas = createChart();
+console.log(datas);
+ 
+var barData = {
+    labels : labs,
+    datasets : [
+        {
+            label: 'Good - 15%',
+            fillColor: 'rgba(50,200,80,0.9)',
+            strokeColor: 'rgba(50,200,80,0.9)',
+            pointColor: 'rgba(50,200,80,0.9)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(220,220,220,1)',
+            data : [100, 152.1436781613267, 186.84974774212745, 216.26193143784303, 245.966277717634, 275.83573752893443, 307.0785804335355, 337.81627674305366, 370.6481312058703, 406.37355090253385, 430.15192782255076, 471.33280973281785, 499.44246741691677, 537.9970626013244, 575.621092001405, 604.3272126291756, 640.4477454807168, 674.3798343578616, 712.407161624887, 749.1135505633546, 827.9559559616055, 859.9345820591725,  904.5379835382314,  926.3821219527633,  969.8136945337286,  989.1353483689804, 1044.19962649214,  1070.3961941791674,  1133.3398299120245,  1158.5496297493614,  1215.4603112289403, 1277.4797544652115,  1305.3023281358514,  1375.4234753474016,  1386.7362848950002,  1436.2714472327611,  1487.057590171887,  1520.504681775975,  1650.1624140934728,  1707.810333594874, 1748.723739456927,  1830.304455502638,  1848.8819129550125,  1944.7365404810462,  1996.9560490948843,  2053.5741444110367,  2130.251047845194,  2135.6607026527436,  2174.1657623322963,  2223.914907383931,  2334.450247925878, 2375.1507232890817, 2392.137207421564,  2369.920413826904,  2530.1799389253783,  2647.7123877233557,  2635.801511208936, 2692.980956866152, 2773.272234863691,  2903.91412653717,  2931.7913376492934,  3097.603448844679,  3089.392324017928,  3220.8455079258583,  3262.98433197565, 3260.680608418948, 3336.495841702289,  3365.984706676795,  3319.915125814383,  3333.050761572829,  3520.8566816574944, 3715.2087217989942,  3753.6910395614645,  3685.6428430540814,  3700.372054182284,  3716.515422790935,  3861.8627342918235,  4015.2148924781186,  4110.54967175952, 4187.879656422263,  4254.90685151505,  4347.689444389558, 4359.79006878711,  4357.158073169316, 4409.378743037263,  4681.57642362466, 4818.712700521153, 5079.245710282983, 5059.191014283462,  5136.124959167772,  5111.648249364958,  5157.063946093812,  5056.563354936239,  5249.238586243016,  5302.968071179784, 5338.817834146206]
+        },
+        {
+            label: 'Expected - 60%',
+            fillColor: 'rgba(50,240,80,0.9)',
+            strokeColor: 'rgba(50,240,80,0.9)',
+            pointColor: 'rgba(50,240,80,0.9)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(151,187,205,1)',
+            data : [100,200,4000, 5000, 55000]
+        }
+    ]
+};
 
-// createChart();
+console.log(barData);
+

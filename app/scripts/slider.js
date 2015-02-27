@@ -1,9 +1,8 @@
 /* Prompts for age and age of retirement */
-var age = parseInt(window.prompt('Your age', 35));
-var ageOfRetirment = parseInt(window.prompt('Age of retirement', 65));
-var yearsRemaining = ageOfRetirment - age;
-var yearsRemainingString = yearsRemaining.toString();
-window.alert(yearsRemainingString + ' ' + 'from now');
+var age;
+var ageOfRetirment;
+var yearsRemaining;
+var yearsRemainingString;
 
 /* Set vars */
 var yearsInt, yearsString, futureYear, futureAge, future, futureString;
@@ -17,14 +16,21 @@ var yearsInput = document.querySelector('#years');
 var yearsOutput = document.querySelector('#yearsOutput');
 var until = document.querySelector('#until');
 var yearsText = document.querySelector('#years-text');
-
+var timeframe = document.querySelector('#timeframe');
 
 /* Set vars for ages */
 var futureAge = document.querySelector('#futureAge');
 
 /* Set initial values from prompts */
-window.onload = function(){
+var timeFrame = function(){
   'use strict';
+  /* Prompts for age and age of retirement */
+  age = parseInt(window.prompt('Your age', 35));
+  ageOfRetirment = parseInt(window.prompt('Age of retirement', 65));
+  yearsRemaining = ageOfRetirment - age;
+  yearsRemainingString = yearsRemaining.toString();
+  window.alert(yearsRemainingString + ' ' + 'from now');
+
   yearsOutput.textContent =  yearsRemainingString;
   futureYear = currentYear + yearsRemaining;
   until.textContent = futureYear;
@@ -33,6 +39,11 @@ window.onload = function(){
   yearsInput.setAttribute('value', yearsRemaining);
   yearsText.setAttribute('value', yearsRemaining);
 };
+
+timeframe.addEventListener('click', function(){
+  'use strict';
+  timeFrame();
+});
 
 /* Event listener function for slider on load */
 function years(){

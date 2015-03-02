@@ -36,6 +36,8 @@ var timeFrame = function(){
   until.textContent = futureYear;
   future = yearsRemaining + age;
   futureAge.textContent = future;
+
+  yearsInput.value = yearsRemaining;
   yearsInput.setAttribute('value', yearsRemaining);
   yearsText.setAttribute('value', yearsRemaining);
 };
@@ -46,7 +48,7 @@ timeframe.addEventListener('click', function(){
 });
 
 /* Event listener function for slider on load */
-function years(){
+(function(){
   'use strict';
   yearsInput.addEventListener('input', function(){
     yearsInt = parseInt(yearsInput.value);
@@ -80,8 +82,4 @@ function years(){
     yearsInput.value = yearsInt;
     yearsInput.setAttribute('value', yearsInt);
   });
-}
-
-
-years();
-
+})();

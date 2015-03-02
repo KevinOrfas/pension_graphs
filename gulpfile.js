@@ -30,7 +30,7 @@ gulp.task('styles', function () {
 });
 
 gulp.task('jshint', function () {
-  return gulp.src(['app/scripts/**/*.js', '!app/scripts/vendor/**/*.js'])
+  return gulp.src(['app/scripts/**/*.js', '!app/scripts/**/main.js', '!app/scripts/vendor/**/*.js'])
     .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))

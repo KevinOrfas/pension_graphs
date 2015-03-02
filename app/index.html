@@ -105,8 +105,8 @@
                 <div class="row">
                    <div class="col-xs-12">
                     <select name="portfolio-type" id="portfolio-type">
-                     <option value="cash-portfolio">Cash portfolio</option>
                      <option value="gilts-portfolio">Gilts portfolio</option>
+                     <option value="cash-portfolio">Cash portfolio</option>
                      <option value="low-investment-risk">Portfolio with very low investment risk</option>
                      <option value="moderate-investment-risk">Portfolio with moderate investment risk</option>
                      <option value="high-investment-risk">Portfolio with high investment risk</option>
@@ -125,7 +125,7 @@
       <div class="row">
             <div class="col-md-1"><div class="letterP4">Amount in 000's of pounds</div></div>
             <!--div class="col-md-6"><canvas id="trChart" width="660" height="400"></canvas></div-->                
-            <div class="col-md-4"><canvas id="trChart" width="500" height="400"></canvas></div>                
+            <div id="roomForChart" class="col-md-4"><!-- <canvas id="trChart" width="500" height="400"></canvas> --></div>                
             <div class="col-md-3"><div id="legendText"></div></div>
       </div>
       
@@ -159,21 +159,10 @@
     <script src="scripts/vendor/Chart.js"></script>
     <script src="scripts/slider.js"></script>
     <script src="scripts/main.js"></script>
-    <script>
-      createChart();
-      var cht = document.getElementById('trChart');
-      var ctx = cht.getContext('2d');
-      var lineChart = new Chart(ctx).Line(barData,{
-                bezierCurve: false,
-                pointDot : false,
-                multiTooltipTemplate: '',
-                scaleStartValue: 0
-            });
+    <script type="text/javascript">
+      
+      
     </script>
-     
-    <!-- 
-    // <script src="scripts/slider-contribution.js"></script>
-    // <script src="scripts/dropdown.js"></script> -->
     <!-- endbuild -->
 
 </body>

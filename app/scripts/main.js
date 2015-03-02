@@ -1,5 +1,6 @@
 /* jshint devel:true */
 /*jslint bitwise: true */
+
 /**** Lower tail quantile for standard normal distribution function.
     This function returns an approximation of the inverse cumulative
     standard normal distribution function.  I.e., given P, it returns
@@ -170,182 +171,117 @@ var pensionInt;
   });
 })();
 
-
-
-var type, getIndex, realRet, stDev, infl, monthlyRet, monthlySd, initialValue, annualDrawdown, thisValue, thisVal;
+/* Variables for */
+var type, 
+    realRet,
+    stDev,
+    infl, 
+    monthlyRet,
+    monthlySd,
+    thisValue,
+    thisVal;
 var monteC = [];
-initialValue = 100;
-annualDrawdown = 5;
-var getValue = 'gilts-portfolio';
+var initialValue = 100,
+    annualDrawdown = 5;
+
+var riskText = document.getElementById('riskText');
+var legendText = document.getElementById('legendText');
 
 var handler = function() {
-    'use strict';
-    var select = document.getElementById('portfolio-type');
-      if(select.addEventListener){
-        select.addEventListener('change',handler,false);
-      }
-      else {
-        select.attachEvent('onchange',handler,false);
-      }
+  'use strict';
+  var select = document.getElementById('portfolio-type');
+  
+  if(select.addEventListener){
+     select.addEventListener('change',handler,false);
+  }
+  else {
+     select.attachEvent('onchange',handler,false);
+  }
 
-    if(select.value) {
-      thisValue = select.value;
+  if(select.value) {
+    thisValue = select.value;
 
-      // window.alert(select.value);
-      thisVal = thisValue.toString();
-      // window.alert(thisVal);
-      return thisVal;
-    }
-
-};
-
-function updateRiskText() {
-    'use strict';
+    // window.alert(select.value);
+    thisVal = thisValue.toString();
+    //window.alert(thisVal);
+   
     var message = '';
 
     // Check what risk category is selected
-  switch(parseInt(pensionSize.value)) {
-    case 10:
-     message = message + 'A <b>low risk</b> portfolio would typically have a large amount invested in bonds with a smaller allocation to equities. ';
-     break;
-    case 0:
-     message = message + 'A <b>medium risk</b> portfolio would typically have a large amount invested in equities with a smaller allocation to bonds. ';
-     break;
-    case 'high-investment-risk':
-     message = message + 'A <b>high risk</b> portfolio would typically be almost entirely invested in equities. ';
-     break;
-  }
-
-
-
-  var riskText = document.getElementById('riskText');
-  riskText.innerHTML = message;
-}
-
-updateRiskText();
-
-
-function portfolioOptions() {
-  'use strict';
-    getIndex = document.getElementById('portfolio-type').selectedIndex;
-    getValue = document.getElementsByTagName('option')[getIndex].value;
-    switch (handler()) {
+    switch(thisVal) {
       case 'cash-portfolio':
-          type = 'Cash portfolio';
-          realRet = 0.0;
-            stDev = 0.0001;
-          break;
-      case 'gilts-portfolio':
-          type = 'Gilts portfolio';
-          realRet = 0.022;
-            stDev = 0.0001;
-          break;
-      case 'low-investment-risk':
-          type = 'Portfolio with very low investment risk';
-          realRet = 0.0425;
-            stDev = 0.052;
-          break;
+        message = message + 'A <b>low risk</b> portfolio would typically have a large amount invested in bonds with a smaller allocation to equities. ';
+        break;
       case 'moderate-investment-risk':
-          type = 'Portfolio with moderate investment risk';
-          realRet = 0.0507;
-            stDev = 0.071;
-          break;
+        message = message + 'A <b>medium risk</b> portfolio would typically have a large amount invested in equities with a smaller allocation to bonds. ';
+        break;
       case 'high-investment-risk':
-          type = 'Portfolio with high investment risk';
-          realRet = 0.0563;
-            stDev = 0.086;
-          break;
+        message = message + 'A <b>high risk</b> portfolio would typically be almost entirely invested in equities. ';
+        break;
+       default: 
+        message = 'Risk risky';
+    }
+
+    riskText.innerHTML = message;
+
+    switch (thisVal) {
+      case 'cash-portfolio':
+        type = 'Cash portfolio';
+        realRet = 0.0;
+        stDev = 0.0001;
+        break;
+      case 'gilts-portfolio':
+        type = 'Gilts portfolio';
+        realRet = 0.022;
+        stDev = 0.0001;
+        break;
+      case 'low-investment-risk':
+        type = 'Portfolio with very low investment risk';
+        realRet = 0.0425;
+        stDev = 0.052;
+        break;
+      case 'moderate-investment-risk':
+        type = 'Portfolio with moderate investment risk';
+        realRet = 0.0507;
+        stDev = 0.071;
+        break;
+      case 'high-investment-risk':
+        type = 'Portfolio with high investment risk';
+        realRet = 0.0563;
+        stDev = 0.086;
+        break;
       case 'uk-equity-portfolio':
-          type = 'UK equity portfolio';
-          realRet = 0.0618;
-            stDev = 0.103;
-          break;
+        type = 'UK equity portfolio';
+        realRet = 0.0618;
+        stDev = 0.103;
+        break;
       case  'global-equity-portfolio':
-          type = 'Global equity portfolio';
-          realRet = 0.0688;
-            stDev = 0.122;
-          break;
+        type = 'Global equity portfolio';
+        realRet = 0.0688;
+        stDev = 0.122;
+        break;
       case  'buy-to-let':
-          type = 'Buy to let';
-          realRet = 0.0745;
-            stDev = 0.137;
-          break;
-  }
+        type = 'Buy to let';
+        realRet = 0.0745;
+        stDev = 0.137;
+        break;
+    }
 
-  infl = 0.02;
-  monthlyRet = Math.pow((1 + realRet - infl), 1/12) - 1;
-  monthlySd = stDev / Math.sqrt(12);
+      infl = 0.02;
+      monthlyRet = Math.pow((1 + realRet - infl), 1/12) - 1;
+      monthlySd = stDev / Math.sqrt(12);
   
-  var params = [initialValue, annualDrawdown, monthlyRet, monthlySd];
-  console.log(params);
-
-  return params;
-}
-
-var paramss = portfolioOptions();
-console.log(paramss[3]);
-
-
-
-var labs = [], data1 = [], data2 = [], median = [], data3 = [], data4 = [];
-var timePeriodsPerYear = 4;
-
-var barData = {
-    labels : labs,
-    datasets : [
-        {
-            label: 'Good - 15%',
-            fillColor: 'rgba(50,200,80,0.9)',
-            strokeColor: 'rgba(50,200,80,0.9)',
-            pointColor: 'rgba(50,200,80,0.9)',
-            pointStrokeColor: '#fff',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(220,220,220,1)',
-            data : [100, 1152.1436781613267, 1186.84974774212745, 2116.26193143784303, 2145.966277717634, 275.83573752893443, 307.0785804335355, 337.81627674305366, 3270.6481312058703, 4206.37355090253385, 4230.15192782255076, 4271.33280973281785, 4299.44246741691677]
-        },
-        {
-            label: 'Expected - 60%',
-            fillColor: 'rgba(50,240,80,0.9)',
-            strokeColor: 'rgba(50,240,80,0.9)',
-            pointColor: 'rgba(50,240,80,0.9)',
-            pointStrokeColor: '#fff',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(151,187,205,1)',
-            data : [100,200,4000, 5000, 55000]
-        },
-        {
-              label: 'Median',
-              fillColor: 'rgba(151,151,151,0)',
-              strokeColor: 'rgba(180,180,200,1)',
-              pointColor: 'rgba(151,187,205,1)',
-              pointStrokeColor: '#fff',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(151,187,205,1)',
-              // data: median
-          },
-          {
-              label: 'Poor - 15%',
-              fillColor: 'rgba(151,151,151,1.0)',
-              strokeColor: 'rgba(151,151,151,1.0)',
-              pointColor: 'rgba(151,187,205,1)',
-              pointStrokeColor: '#fff',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(151,187,205,1)',
-              // data: data3
-          },
-          {
-              label: 'Very Poor 5%',
-              fillColor: 'rgba(255,255,255,0.9)',
-              strokeColor: 'rgba(250,70,80,1)',
-              pointColor: 'rgba(151,187,205,1)',
-              pointStrokeColor: '#fff',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(151,187,205,1)',
-              // data: data4
-          }
-    ]
+      var params = [initialValue, annualDrawdown, monthlyRet, monthlySd];
+      return params;
+  }
 };
 
+var paramss = handler();
+console.log(paramss);
+
+
+var labs = [], data1 = [], data2 = [], median = [], data3 = [], data4 = [], barData = {};
+var timePeriodsPerYear = 4;
 
 
 function legend(parent, data) {
@@ -377,48 +313,121 @@ function legend(parent, data) {
 }
 
 
-function createChart() {
-      'use strict';
-      labs[0] = 0;
-      data1[0] = initialValue;
-      data2[0] = initialValue;
-      median[0] = initialValue;
-      data3[0] = initialValue;
-      data4[0] = initialValue;
+var createChart = function() {
+    'use strict';
+    labs[0] = 0;
+    data1[0] = initialValue;
+    data2[0] = initialValue;
+    median[0] = initialValue;
+    data3[0] = initialValue;
+    data4[0] = initialValue;
 
-      monteC = monteCarlo(paramss[0],paramss[1], paramss[2], paramss[3]);
+    monteC = monteCarlo(paramss[0],paramss[1], paramss[2], paramss[3]);
 
-      for (var i = 1; i <= 100; i++) {
-         if ((i / timePeriodsPerYear) % 5 === 0) {
-            labs[i] = i / timePeriodsPerYear;
-         } else {
-            labs[i] = '';
-            data1[i] = monteC[i - 1][3];
-            data2[i] = monteC[i - 1][3];
-            median[i] = monteC[i - 1][2];
-            data3[i] = monteC[i - 1][1];
-            data4[i] = monteC[i - 1][0];
-          }
-      }
+    for (var i = 1; i <= 100; i++) {
+       if ((i / timePeriodsPerYear) % 5 === 0) {
+          labs[i] = i / timePeriodsPerYear;
+       } else {
+          labs[i] = '';
+          data1[i] = monteC[i - 1][3];
+          data2[i] = monteC[i - 1][3];
+          median[i] = monteC[i - 1][2];
+          data3[i] = monteC[i - 1][1];
+          data4[i] = monteC[i - 1][0];
+        }
+    }
 
-      console.log(data1);
-      console.log(data2);
-      console.log(median);
-      console.log(data3);
-      console.log(data4);
+    // console.log(data1);
+    // console.log(data2);
+    // console.log(median);
+    // console.log(data3);
+    // console.log(data4);
 
-    var graphData = [data1, data2, data3];
-    legend(document.getElementById('legendText'), barData);
+    // var test = parseInt(data1);
+    
+    
+    
 
-    return graphData;
-}
+    barData = {
+      labels : labs,
+      datasets : [
+        {
+          label: 'Good - 15%',
+          fillColor: 'rgba(50,200,80,0.9)',
+          strokeColor: 'rgba(50,200,80,0.9)',
+          pointColor: 'rgba(50,200,80,0.9)',
+          pointStrokeColor: '#fff',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data : [14,20]
+        },
+        {
+          label: 'Expected - 60%',
+          fillColor: 'rgba(50,240,80,0.9)',
+          strokeColor: 'rgba(50,240,80,0.9)',
+          pointColor: 'rgba(50,240,80,0.9)',
+          pointStrokeColor: '#fff',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(151,187,205,1)',
+          data : [1,3]
+        },
+        {
+          label: 'Median',
+          fillColor: 'rgba(151,151,151,0)',
+          strokeColor: 'rgba(180,180,200,1)',
+          pointColor: 'rgba(151,187,205,1)',
+          pointStrokeColor: '#fff',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(151,187,205,1)',
+          // data: median
+        },
+        {
+          label: 'Poor - 15%',
+          fillColor: 'rgba(151,151,151,1.0)',
+          strokeColor: 'rgba(151,151,151,1.0)',
+          pointColor: 'rgba(151,187,205,1)',
+          pointStrokeColor: '#fff',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(151,187,205,1)',
+          // data: data3
+        },
+        {
+          label: 'Very Poor 5%',
+          fillColor: 'rgba(255,255,255,0.9)',
+          strokeColor: 'rgba(250,70,80,1)',
+          pointColor: 'rgba(151,187,205,1)',
+          pointStrokeColor: '#fff',
+          pointHighlightFill: '#fff',
+          pointHighlightStroke: 'rgba(151,187,205,1)',
+          // data: data4
+        }
+      ]
+    };
 
-var datas = createChart();
-console.log(datas[0]);
- 
+    legend(legendText, barData);
 
+    
+
+    var htmlForGraph = '<canvas id="trChart" width="500" height="400">';
+    var holder = document.getElementById('roomForChart');
+    holder.innerHTML += htmlForGraph;
+    var cht = document.getElementById('trChart');
+    var ctx = cht.getContext('2d');
+    var lineChart = new Chart(ctx).Line(barData,{
+                bezierCurve: false,
+                pointDot : false,
+                multiTooltipTemplate: '',
+                scaleStartValue: 0
+            });
+    holder.onclick = function(evt){
+      var activePoints = lineChart.getPointsAtEvent(evt);
+      // => activePoints is an array of points on the canvas that are at the same position as the click event.
+      alert('See me?');
+      console.log(activePoints);
+    };
+    
+};
+
+window.onload = createChart();
 
 console.log(barData);
-
-
-

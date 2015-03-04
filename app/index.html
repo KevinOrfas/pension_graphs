@@ -42,18 +42,19 @@
         <div class="col-xs-12">
           <form accept-charset="UTF-8" action="/" class="" id="pension_form" method="post">
             <!-- Section: set timeframe -->
-            <section class="row well">
+            <section class="row well form-group">
               <div class="col-xs-12">
                 <h3 class="number-title">Set a timeframe</h3>
-                <button type="button" id="timeframe">Set timeframe</button>
+                <button class="btn btn-primary" type="button" id="timeframe">Set timeframe</button>
                 <p>When do you plan to start drawing income from your pension? You must be 55+ at that point.</p>
                 <div class="row">
                   <div class="col-xs-12 col-md-8">
                       <label for="years">Years</label>
-                      <input type="range" id="years" name="years" value="30">
+                      <input type="range" id="years" name="years" class="form-control" value="30">
                   </div>
-                  <div class="col-xs-12 col-md-4 valign">
-                    <input id="years-text" value="" type="text">
+                  <div class="col-xs-12 col-md-4 valign input-group">
+                    <span class="input-group-addon">Years</span>
+                    <input id="years-text" value="" class="form-control" type="text">
                   </div>
                 </div> <!-- end of row -->
                 <div class="row">
@@ -66,18 +67,18 @@
             </section><!-- end set timeframe -->
 
             <!-- Section: Pension pot -->
-            <section class="row well">
+            <section class="row well form-group">
               <div class="col-xs-12">
                   <h3 class="number-title">Pension Pot</h3>
-                  <p>Your final pension pot</p>
                   <div class="row">
-                    <div class="col-xs-8">
+                    <div class="col-md-7 ">
                       <label for="pension-size">Size of Pension</label>
-                      <input type="range" id="pension-size" name="pension-size" min="0" max="1000000" step="500" value="200000">
+                      <input type="range" id="pension-size" name="pension-size" class="form-control" min="0" max="1000000" step="1000" value="100000">
                     </div>
-                     <div class="col-xs-4 valign">
-                        <span>£&nbsp;</span> <input id="pension-size-text" value="200000" type="text">
-                     </div>
+                    <div class="col-md-4 valign input-group">
+                      <span class="input-group-addon">&pound;</span>
+                      <input id="pension-size-text" value="" class="form-control" placeholder="100,000" aria-label="Amount(to the nearest pound)" type="text" value="">
+                    </div>
                   </div>
               </div>
             </section> <!-- end of pension pot -->
@@ -89,10 +90,11 @@
                   <div class="row">
                     <div class="col-xs-8">
                       <label for="pension-size">Annual Pension</label>
-                      <input type="range" id="pension-annual" name="pension-annual" min="0" max="1000000" step="500" value="200000">
+                      <input type="range" id="pension-annual" name="pension-annual" class="form-control" min="0" max="100000" step="500" value="2000">
                     </div>
-                     <div class="col-xs-4 valign">
-                        <span>£&nbsp;</span> <input id="pension-annual-text" value="200000" type="text">
+                     <div class="col-xs-4 valign input-group">
+                        <span class="input-group-addon">&pound;</span>
+                        <input id="pension-annual-text" value="" class="form-control" placeholder="5,000" aria-label="Amount (to the nearest pound)" type="text">
                      </div>
                   </div>
               </div>
@@ -103,10 +105,10 @@
               <div class="col-xs-12">
                 <h3 class="number-title">Portfolio type</h3>
                 <div class="row">
-                   <div class="col-xs-12">
-                    <select name="portfolio-type" id="portfolio-type">
-                     <option value="gilts-portfolio">Gilts portfolio</option>
+                   <div class="col-md-6">
+                    <select name="portfolio-type" id="portfolio-type" class="form-control">
                      <option value="cash-portfolio">Cash portfolio</option>
+                     <option value="gilts-portfolio">Gilts portfolio</option>
                      <option value="low-investment-risk">Portfolio with very low investment risk</option>
                      <option value="moderate-investment-risk">Portfolio with moderate investment risk</option>
                      <option value="high-investment-risk">Portfolio with high investment risk</option>
@@ -123,10 +125,15 @@
         </div> <!-- end of form's column -->
       </div> <!-- end of form's row -->
       <div class="row">
-            <div class="col-md-1"><div class="letterP4">Amount in 000's of pounds</div></div>
-            <!--div class="col-md-6"><canvas id="trChart" width="660" height="400"></canvas></div-->                
-            <div id="roomForChart" class="col-md-4"><!-- <canvas id="trChart" width="500" height="400"></canvas> --></div>                
-            <div class="col-md-3"><div id="legendText"></div></div>
+        <div class="col-md-1"><div class="letterP4">Amount in 000's of pounds</div></div>
+        <div id="roomForChart" class="col-md-4">
+          <!-- <canvas id="trChart" width="500" height="400"></canvas> -->
+          <canvas id="trChart" width="500" height="400">
+        </div>
+        <div class="col-md-3"><div id="legendText"></div></div>
+        <div class="col-md-1">
+          <button id="update-chart" class="btn btn-success" type="submit">Update</button>
+        </div>
       </div>
       
       <div class="row">

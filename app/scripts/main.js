@@ -137,39 +137,58 @@ function monteCarlo(initialValue, annualOutflow, monthlyReturn, monthlyStdDev) {
 }
 
 /* Set vars for years from DOM */
+// 'use strict';
 var pensionSize = document.querySelector('#pension-size');
 var pensionAnnual = document.querySelector('#pension-annual');
 var pensionSizeText = document.querySelector('#pension-size-text');
 var pensionAnnualText = document.querySelector('#pension-annual-text');
-var pensionInt;
+var pensionInt,pensionIntAnn;
 
 /* Event listener function for slider on load */
-(function(){
-  'use strict';
+
   pensionSize.addEventListener('input', function(){
+    'use strict';
     pensionInt = parseInt(pensionSize.value);
     pensionSize.setAttribute('value', pensionInt);
     pensionSizeText.setAttribute('value', pensionInt);
+    // console.log(pensionInt);
   });
 
   pensionSizeText.addEventListener('keyup', function() {
+     'use strict';
      pensionInt = parseInt(pensionSizeText.value);
      pensionSize.value = pensionInt;
      pensionSize.setAttribute('value', pensionInt);
+     return pensionInt;
   });
 
+
+
   pensionAnnual.addEventListener('input', function(){
-    pensionInt = parseInt(pensionAnnual.value);
-    pensionAnnual.setAttribute('value', pensionInt);
-    pensionAnnualText.setAttribute('value', pensionInt);
+    'use strict';
+    pensionIntAnn = parseInt(pensionAnnual.value);
+    pensionAnnual.setAttribute('value', pensionIntAnn);
+    pensionAnnualText.setAttribute('value', pensionIntAnn);
   });
 
   pensionAnnualText.addEventListener('keyup', function() {
-     pensionInt = parseInt(pensionAnnualText.value);
-     pensionAnnual.value = pensionInt;
-     pensionAnnual.setAttribute('value', pensionInt);
+     'use strict';
+     pensionIntAnn = parseInt(pensionAnnualText.value);
+     pensionAnnual.value = pensionIntAnn;
+     pensionAnnual.setAttribute('value', pensionIntAnn);
+     return pensionIntAnn;
   });
-})();
+
+// var contr, c;
+
+
+// var cc = pensionSizeText.addEventListener('focusout', function(){
+//     var contr = controllers();
+//     var c = parseInt(contr);
+//     window.alert(c);
+//     return c ;
+    
+// });
 
 /* Variables for */
 var type, 
@@ -180,22 +199,22 @@ var type,
     monthlySd,
     thisValue,
     thisVal;
-var monteC = [];
-var initialValue = 100,
-    annualDrawdown = 5;
+// var initialValue = 100,
+//     annualDrawdown = 5;
 
 var riskText = document.getElementById('riskText');
 var legendText = document.getElementById('legendText');
 
-var handler = function() {
+
+
+var dropdown = function() {
   'use strict';
   var select = document.getElementById('portfolio-type');
-  
   if(select.addEventListener){
-     select.addEventListener('change',handler,false);
+     select.addEventListener('change',dropdown,false);
   }
   else {
-     select.attachEvent('onchange',handler,false);
+     select.attachEvent('onchange',dropdown,false);
   }
 
   if(select.value) {
@@ -210,12 +229,16 @@ var handler = function() {
     // Check what risk category is selected
     switch(thisVal) {
       case 'cash-portfolio':
+      case 'gilts-portfolio':
         message = message + 'A <b>low risk</b> portfolio would typically have a large amount invested in bonds with a smaller allocation to equities. ';
         break;
       case 'moderate-investment-risk':
+      case 'low-investment-risk':
+      case 'high-investment-risk':
         message = message + 'A <b>medium risk</b> portfolio would typically have a large amount invested in equities with a smaller allocation to bonds. ';
         break;
-      case 'high-investment-risk':
+      case 'uk-equity-portfolio':
+      case 'global-equity-portfolio':
         message = message + 'A <b>high risk</b> portfolio would typically be almost entirely invested in equities. ';
         break;
        default: 
@@ -232,8 +255,8 @@ var handler = function() {
         break;
       case 'gilts-portfolio':
         type = 'Gilts portfolio';
-        realRet = 0.022;
-        stDev = 0.0001;
+        realRet = 30.022;
+        stDev = 100.0001;
         break;
       case 'low-investment-risk':
         type = 'Portfolio with very low investment risk';
@@ -270,19 +293,11 @@ var handler = function() {
       infl = 0.02;
       monthlyRet = Math.pow((1 + realRet - infl), 1/12) - 1;
       monthlySd = stDev / Math.sqrt(12);
-  
-      var params = [initialValue, annualDrawdown, monthlyRet, monthlySd];
+      
+      var params = [monthlyRet, monthlySd];
       return params;
   }
 };
-
-var paramss = handler();
-console.log(paramss);
-
-
-var labs = [], data1 = [], data2 = [], median = [], data3 = [], data4 = [], barData = {};
-var timePeriodsPerYear = 4;
-
 
 function legend(parent, data) {
     'use strict';
@@ -312,122 +327,155 @@ function legend(parent, data) {
     });
 }
 
+var lineChart;
+// var timePeriodsPerYear = 4;
+// var labs = [];
 
-var createChart = function() {
+// for (var i = 1; i <= 25; i++) {
+//     if ((i / timePeriodsPerYear) % 5 === 0) {
+//         labs[i] = i / timePeriodsPerYear;
+//     } else {
+//       labs[i] = '';
+//     }
+// }
+
+// window.alert(labs);
+
+
+var barData = {
+    labels : ['0','5','10','15','20','25'],
+    datasets : [
+      {
+        label: 'Good - 15%',
+        fillColor: 'rgba(50,200,80,0.9)',
+        strokeColor: 'rgba(50,200,80,0.9)',
+        pointColor: 'rgba(50,200,80,0.9)',
+        pointStrokeColor: '#fff',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(220,220,220,1)',
+        data : [100,108,111.5,114.5,117,119,121,122.5,124.5,126.5,127.5,129,130.5,131.5,133,134,136,137,138,139.5,140.5,142,143,144.5,145.5,146.5,148,149,150,151,152,153.5,154.5,155.5,156.5,158.5,158.5,160.5,162,162.5,164,164,165.5,166,167.5,168.5,169.5,171.5,172.5,173.5,174.5,175.5,176.5,178,179,180.5,181,182,184,184.5,185.5,186,188.5,189,190,190.5,193,193.5,194.5,195.5,197,199,199.5,200.5,202,203,203.5,206,206,208,208.5,210,211.5,212.5,214,214,215,216.5,218.5,219.5,220.5,221.5,223.5,224,226,225,227,228,230.5,232.5,234]
+      },
+      {
+        label: 'Expected - 60%',
+        fillColor: 'rgba(50,240,80,0.9)',
+        strokeColor: 'rgba(50,240,80,0.9)',
+        pointColor: 'rgba(50,240,80,0.9)',
+        pointStrokeColor: '#fff',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(151,187,205,1)',
+        data : [100,104,105.5,106.5,107.5,108.5,109,110,110.5,111,111.5,112,112.5,113,113.5,113.5,114,114,114.5,114.5,115,115.5,115,116,116,116,116.5,116.5,117,116.5,117,117,117.5,117.5,118,118,118,118,118.5,118.5,119,119,119,119,119,119,119,119.5,119,119,119,120,120,120,120,120,120,120.5,120,120,120,120,120.5,120.5,120.5,120,120,120.5,120.5,120.5,121,121,120.5,120.5,120.5,120.5,120.5,120.5,120.5,120,120.5,120,120,120,120.5,120.5,120,120,119.5,119.5,119.5,119.5,119.5,119.5,119,119.5,119.5,118.5,119,118.5,118]
+      },
+      {
+        label: 'Median',
+        fillColor: 'rgba(151,151,151,0)',
+        strokeColor: 'rgba(180,180,200,1)',
+        pointColor: 'rgba(151,187,205,1)',
+        pointStrokeColor: '#fff',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(151,187,205,1)',
+        data: [100,99.5,99,99,98.5,98,98,97.5,97,96.5,96,96,95.5,95,94.5,94,94,93.5,92.5,92.5,92,92,91.5,91,90.5,90,89.5,89,88.5,88,87.5,87,86.5,86.5,85.5,85,84.5,84,83.5,83,82.5,82,81.5,81,80.5,80,79.5,78.5,78,77.5,77.5,76.5,76,75,75,74,73,72.5,72,71.5,71,70.5,69.5,69,68,67.5,67,66.5,65.5,65,64.5,63.5,62.5,62,61,60.5,60,59,58.5,57.5,57,56,55,54.5,53.5,53,51.5,51,50.5,49.5,48.5,47.5,47,46,45,44,43.5,42.5,41.5,41,40]
+      },
+      {
+        label: 'Poor - 15%',
+        fillColor: 'rgba(151,151,151,1.0)',
+        strokeColor: 'rgba(151,151,151,1.0)',
+        pointColor: 'rgba(151,187,205,1)',
+        pointStrokeColor: '#fff',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(151,187,205,1)',
+        data: [100,95,93,91.5,90,88.5,87.5,86.5,85,84,83,82,81,80,79,78,77,76.5,75.5,74.5,73.5,72.5,71.5,70.5,70,69,68,67,66.5,65.5,64.5,64,62.5,62,61,60,59,58,57.5,56.5,55.5,54.5,54,52.5,52,51,50,49,48,47,46.5,45.5,44.5,43.5,42.5,41.5,40.5,39.5,38.5,37.5,36.5,35.5,34.5,34,32.5,31.5,30.5,29.5,28.5,27.5,26.5,25.5,24.5,23.5,22,21,20,19,18,17,15.5,14.5,13.5,12.5,11,10,9,7.5,6.5,5,4,3,1.5,0.5,0,0,0,0,0,0,0]
+      },
+      {
+        label: 'Very Poor 5%',
+        fillColor: 'rgba(255,255,255,0.9)',
+        strokeColor: 'rgba(250,70,80,1)',
+        pointColor: 'rgba(151,187,205,1)',
+        pointStrokeColor: '#fff',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(151,187,205,1)',
+        data: [100,91,87.5,84.5,82,80.5,78,76.5,75,73.5,72,70,68.5,67.5,66,64.5,63.5,62,60.5,59.5,58,57,56,55,54,53,52,50.5,49.5,48.5,47.5,46.5,45,43.5,42.5,41.5,40.5,39.5,38.5,37.5,36.5,35.5,34,33,32,31,29.5,28.5,27.5,26.5,25.5,24,23,22,21,19.5,18.5,17.5,16.5,15,14,13,12,10.5,9.5,8,7,6,5,3.5,2.5,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+      }
+    ]
+  };
+
+var graphDom = function(gData){
     'use strict';
-    labs[0] = 0;
-    data1[0] = initialValue;
-    data2[0] = initialValue;
-    median[0] = initialValue;
-    data3[0] = initialValue;
-    data4[0] = initialValue;
-
-    monteC = monteCarlo(paramss[0],paramss[1], paramss[2], paramss[3]);
-
-    for (var i = 1; i <= 100; i++) {
-       if ((i / timePeriodsPerYear) % 5 === 0) {
-          labs[i] = i / timePeriodsPerYear;
-       } else {
-          labs[i] = '';
-          data1[i] = monteC[i - 1][3];
-          data2[i] = monteC[i - 1][3];
-          median[i] = monteC[i - 1][2];
-          data3[i] = monteC[i - 1][1];
-          data4[i] = monteC[i - 1][0];
-        }
-    }
-
-    // console.log(data1);
-    // console.log(data2);
-    // console.log(median);
-    // console.log(data3);
-    // console.log(data4);
-
-    // var test = parseInt(data1);
-    
-    
-    
-
-    barData = {
-      labels : labs,
-      datasets : [
-        {
-          label: 'Good - 15%',
-          fillColor: 'rgba(50,200,80,0.9)',
-          strokeColor: 'rgba(50,200,80,0.9)',
-          pointColor: 'rgba(50,200,80,0.9)',
-          pointStrokeColor: '#fff',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data : [14,20]
-        },
-        {
-          label: 'Expected - 60%',
-          fillColor: 'rgba(50,240,80,0.9)',
-          strokeColor: 'rgba(50,240,80,0.9)',
-          pointColor: 'rgba(50,240,80,0.9)',
-          pointStrokeColor: '#fff',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(151,187,205,1)',
-          data : [1,3]
-        },
-        {
-          label: 'Median',
-          fillColor: 'rgba(151,151,151,0)',
-          strokeColor: 'rgba(180,180,200,1)',
-          pointColor: 'rgba(151,187,205,1)',
-          pointStrokeColor: '#fff',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(151,187,205,1)',
-          // data: median
-        },
-        {
-          label: 'Poor - 15%',
-          fillColor: 'rgba(151,151,151,1.0)',
-          strokeColor: 'rgba(151,151,151,1.0)',
-          pointColor: 'rgba(151,187,205,1)',
-          pointStrokeColor: '#fff',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(151,187,205,1)',
-          // data: data3
-        },
-        {
-          label: 'Very Poor 5%',
-          fillColor: 'rgba(255,255,255,0.9)',
-          strokeColor: 'rgba(250,70,80,1)',
-          pointColor: 'rgba(151,187,205,1)',
-          pointStrokeColor: '#fff',
-          pointHighlightFill: '#fff',
-          pointHighlightStroke: 'rgba(151,187,205,1)',
-          // data: data4
-        }
-      ]
-    };
-
-    legend(legendText, barData);
-
-    
-
-    var htmlForGraph = '<canvas id="trChart" width="500" height="400">';
-    var holder = document.getElementById('roomForChart');
-    holder.innerHTML += htmlForGraph;
     var cht = document.getElementById('trChart');
     var ctx = cht.getContext('2d');
-    var lineChart = new Chart(ctx).Line(barData,{
+    lineChart = new Chart(ctx);
+    lineChart.Line(gData,{
                 bezierCurve: false,
                 pointDot : false,
                 multiTooltipTemplate: '',
                 scaleStartValue: 0
-            });
-    holder.onclick = function(evt){
-      var activePoints = lineChart.getPointsAtEvent(evt);
-      // => activePoints is an array of points on the canvas that are at the same position as the click event.
-      alert('See me?');
-      console.log(activePoints);
-    };
+    });
+
+   
+    console.log(lineChart);
     
 };
 
-window.onload = createChart();
+// var graphDel = function(){
+//     'use strict';
+//     var cht = document.getElementById('trChart');
+//     var ctx = cht.getContext('2d');
+//     lineChart = new Chart(ctx);
+//     lineChart.removeData();
+//     console.log(lineChart);
+    
+// };
+
+
+var createChart = function(oldData) {
+    'use strict';
+    legend(legendText, oldData);
+    graphDom(oldData);
+};
+
+window.onload = function(){
+  'use strict';
+  createChart(barData);
+  console.log(barData);
+};
 
 console.log(barData);
+var paramss;
+var updateData = function(oldData){
+    'use strict';
+    var dataSetA = oldData.datasets[0].data;
+    var dataSetB = oldData.datasets[1].data;
+    var dataSetM = oldData.datasets[2].data;
+    var dataSetC = oldData.datasets[3].data;
+    var dataSetD = oldData.datasets[4].data;
+    // tt = controllers();
+    console.log(pensionInt);
+    console.log(pensionIntAnn);
+    var monteC = monteCarlo(pensionInt,pensionIntAnn,paramss[0],paramss[1]);
+    console.log(monteC);
+    // window.alert(monteC);
+    // var newDataA = [1,12,23,34,45, 21,3];
+    // var newDataB = [34,45,63,12,19,3,43];
+    for (var i = 1; i <= 100; i++) {
+       dataSetA[i] = monteC[i - 1][3];
+       dataSetB[i] = monteC[i - 1][3];
+       dataSetM[i] = monteC[i - 1][2];
+       dataSetC[i] = monteC[i - 1][1];
+       dataSetD[i] = monteC[i - 1][0];
+    }
+    
+    console.log(dataSetA);
+    console.log(dataSetB);
+    console.log(barData);
+    // return oldData;
+  };
+
+
+var updateButton = document.getElementById('update-chart');
+updateButton.addEventListener('click', function(){
+  'use strict';
+   paramss = dropdown();
+   console.log(paramss);
+   // graphDel();
+   updateData(barData);
+   graphDom(barData);
+});

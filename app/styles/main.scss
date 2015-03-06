@@ -2,6 +2,7 @@ $icon-font-path: '../fonts/';
 
 // bower:scss
 @import "bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "bower_components/chartist/dist/scss/chartist.scss";
 // endbower
 
 .browsehappy {
@@ -10,6 +11,98 @@ $icon-font-path: '../fonts/';
   color: #000;
   padding: 0.2em 0;
 }
+
+body {
+    background: #EEEEEE;
+    font-family: "aktiv-grotesk-std",sans-serif;
+    padding: 0 !important;
+}
+
+.container-fluid {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #37424A;
+    background-image: url('https://www.brewin.co.uk/assets/img/logo/brewin-dolphin-hallmark-logo.png');
+    background-repeat:  no-repeat;
+    background-size: 400px;
+    background-position: center;
+    height: 150px;
+    padding-bottom: 1em;
+    /*h2 {
+        padding: 2em;
+        color: #fff;
+        margin-top: 0;
+    }*/
+}
+
+h1 {
+    font-size: 4em;
+}
+
+h3 {
+    font-size: 2.5em;
+}
+
+.bg {
+    background: #fff;
+    margin: 1em 0;
+    padding: 2em;
+    position: relative;
+}
+
+
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+.btn-timeframe {
+    background: #649EAE;
+    color: #fff;
+    float: right;
+    margin-left: 1em;
+    &:hover {
+        background: lighten(#649EAE, 10%);
+        color: #fff;
+    }
+}
+
+.year-form-now {
+    display: none;
+    font-size: 1.5em;
+}
+
+.display {
+    display: block;
+}
+
+#update-chart {
+    margin: 0 0 25em 0;
+
+}
+
+
+
+#riskText {
+    /*margin-top: 12em;*/
+    font-size: 1.5em;
+   
+        bottom: auto;
+        height: 50%; 
+        left:0;
+        margin: auto;
+        position: absolute;
+        right:0;
+        top:auto;
+        width: 100%;
+  
+}
+
+
 
 .nr {
   background: #25ba2e;
@@ -33,6 +126,8 @@ body {
 .valign {
     margin: 2.9em 0 0 0;
 }
+
+
 
 input[type=range] {
     /*removes default webkit styles*/
@@ -58,7 +153,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: goldenrod;
+    background: #649EAE;
     margin-top: -4px;
 }
 input[type=range]:focus {

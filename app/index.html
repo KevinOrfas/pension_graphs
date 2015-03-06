@@ -16,12 +16,14 @@
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- <link rel="stylesheet" href="styles/jquery-ui.css"> -->
+
     <!-- endbuild -->
 
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
-    
+    <script src="//use.typekit.net/cfc0azl.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
   </head>
   <body>
     <!--[if lt IE 8]>
@@ -33,19 +35,28 @@
       </div>
     </div> -->
     <div class="container-fluid">
+      <header class="text-center">
+       <!-- <h2 class="text-center">Brewin Dolphin</h2> -->
+      </header>
+    </div>
+    <div class="container">
+      
       <div class="row">
         <div class="col-xs-12">
-              <h1>My pension scheme</h1>
+            <h1 class="tk-aktiv-grotesk-std">My pension scheme</h1>
+            <div class="someclass">
+              <img id="image1" name="image1" />
+            </div>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
           <form accept-charset="UTF-8" action="/" class="" id="pension_form" method="post">
+
             <!-- Section: set timeframe -->
-            <section class="row well form-group">
+            <section class="row bg form-group">
               <div class="col-xs-12">
-                <h3 class="number-title">Set a timeframe</h3>
-                <button class="btn btn-primary" type="button" id="timeframe">Set timeframe</button>
+                <h3>Set a timeframe</h3>
                 <p>When do you plan to start drawing income from your pension? You must be 55+ at that point.</p>
                 <div class="row">
                   <div class="col-xs-12 col-md-8">
@@ -58,16 +69,19 @@
                   </div>
                 </div> <!-- end of row -->
                 <div class="row">
-                  <div class="col-xs-12">
-                    <p>About <span id="yearsOutput">__</span> years from now, in <span id="until">__,</span> when you're <span id="futureAge">__</span>
+                  <div class="col-md-10">
+                    <p class="year-form-now">About <span id="yearsOutput">__</span> years from now, in <span id="until">__,</span> when you're <span id="futureAge">__</span>
                     </p>
+                  </div>
+                  <div class="col-md-2 nopadding">
+                    <button type="button" class="btn btn-timeframe" data-toggle="modal" data-target=".bs-example-modal-sm" id="timeframe">Set timeframe</button>
                   </div>
                 </div> <!-- end of row -->
               </div> <!-- end of first column -->
             </section><!-- end set timeframe -->
 
             <!-- Section: Pension pot -->
-            <section class="row well form-group">
+            <section class="row bg form-group">
               <div class="col-xs-12">
                   <h3 class="number-title">Pension Pot</h3>
                   <div class="row">
@@ -84,7 +98,7 @@
             </section> <!-- end of pension pot -->
 
             <!-- Section: After tax annual pension spending -->
-            <section class="row well">
+            <section class="row bg">
               <div class="col-xs-12">
                   <h3 class="number-title">After tax annual pension spending</h3>
                   <div class="row">
@@ -101,12 +115,13 @@
             </section> <!-- end of pension pot -->
 
             <!-- Section: Dropdown -->
-            <section class="row well">
+            <section class="row bg">
               <div class="col-xs-12">
                 <h3 class="number-title">Portfolio type</h3>
                 <div class="row">
                    <div class="col-md-6">
                     <select name="portfolio-type" id="portfolio-type" class="form-control">
+                     <option value="select-portfolio">Select portfolio type</option>
                      <option value="cash-portfolio">Cash portfolio</option>
                      <option value="gilts-portfolio">Gilts portfolio</option>
                      <option value="low-investment-risk">Portfolio with very low investment risk</option>
@@ -122,24 +137,32 @@
               </div>
             </section>
           </form> <!-- end of form -->
+          <section class="container">
+            <div class="row bg">
+              <div class="col-md-1">
+                <div class="letterP4">Amount in 000's of pounds</div>
+              </div>
+              
+              <div class="col-md-8" id="roomForChart" >
+                <canvas id="trChart" width="700" height="500">
+                <!-- <div class="ct-chart ct-perfect-fourth"></div> -->
+              </div>
+              
+              <div class="col-md-3 col-push-1">
+                <div id="legendText"></div>
+                <div id="riskText" role="alert">
+                  <p>A <b>low risk</b> portfolio would typically have a large amount invested in bonds with a smaller allocation to equities.</p>
+                </div>
+              </div>
+            </div>
+          </section>
         </div> <!-- end of form's column -->
       </div> <!-- end of form's row -->
-      <div class="row">
-        <div class="col-md-1"><div class="letterP4">Amount in 000's of pounds</div></div>
-        <div id="roomForChart" class="col-md-4">
-          <!-- <canvas id="trChart" width="500" height="400"></canvas> -->
-          <canvas id="trChart" width="500" height="400">
-        </div>
-        <div class="col-md-3"><div id="legendText"></div></div>
-        <div class="col-md-1">
-          <button id="update-chart" class="btn btn-success" type="submit">Update</button>
-        </div>
-      </div>
       
       <div class="row">
-         <div id="riskText" class="alert alert-info" role="alert"></div>
+        <button id="update-chart" class="btn btn-success" type="submit">Update Chart</button>
       </div>
-    </div> <!-- end of container fluid -->
+    </div> <!-- end of container -->
     
     
 
@@ -158,7 +181,7 @@
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
-   <!--  // <script src="/bower_components/Chartjs/Chart.js"></script> -->
+    <script src="/bower_components/chartist/dist/chartist.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

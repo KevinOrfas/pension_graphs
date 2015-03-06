@@ -4,6 +4,7 @@
   "dependencies": {
     "bootstrap-sass-official": "~3.3.1",
     "modernizr": "~2.8.1",
-    "Chart.js": "~1.0.1"
+    "Chart.js": "~1.0.1",
+    "chartist": "~0.7.3"
   }
 }

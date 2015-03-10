@@ -41,7 +41,7 @@
       
       <div class="row">
         <div class="col-xs-12">
-            <h1 class="tk-aktiv-grotesk-std">My pension scheme</h1>
+            <h1 class="tk-aktiv-grotesk-std">What annuity is right for you?</h1>
         </div>
       </div>
       <div class="row">
@@ -52,11 +52,8 @@
               <div class="col-xs-12">
                 <div class="row">
                   <div class="col-xs-10">
-                    <h3 class="number-title">What annuity is right for me?</h3>
-                    <p>How much money will be in my annuity when you start retirement?</p>
-                  </div>
-                  <div class="col-xs-2">
-                    <a class="btn btn-success reset" type="reset">Reset value</a>
+                    <h3>What is the size of your annuity pot?</h3>
+                    <p>How much money will be in your annuity when you start retirement?</p>
                   </div>
                 </div>
                   <div class="row">
@@ -77,11 +74,8 @@
               <div class="col-xs-12">
                 <div class="row">
                   <div class="col-xs-10">
-                      <h3 class="number-title">What are your living costs?</h3>
-                      <p>How much money to you plan to spend each year?</p>
-                  </div>
-                   <div class="col-xs-2">
-                    <a class="btn btn-success reset" type="reset">Reset value</a>
+                      <h3>What are your living costs?</h3>
+                      <p>How much money do you plan to spend each year in retirment?</p>
                   </div>
                 </div>
                   <div class="row">
@@ -102,11 +96,8 @@
               <div class="col-xs-12">
               <div class="row">
                 <div class="col-xs-10">
-                  <h3 class="number-title">What’s your attitude towards risk</h3>
+                  <h3>What’s your attitude towards risk</h3>
                   <p>What sort of plan suits your risk profile?</p>
-                </div>
-                <div class="col-xs-2">
-                    <a class="btn btn-success reset" type="reset">Reset value</a>
                 </div>
               </div>
                 <div class="row">
@@ -126,22 +117,46 @@
               </div>
             </section>
           </form> <!-- end of form -->
-          <section>
-              <div class="row bg">
-                <div class="col-md-1">
-                  <div class="letterP4">Amount in 000's of pounds</div>
+          <!-- Graph -->
+          <section id="graph">
+            <div class="row bg">
+              <div class="col-xs-12">
+                <div class="row">
+                  <div class="col-md-9">
+                    <h3 class="graph-margin">Projected annuity value</h3>
+                  </div>
+                  <div class="col-md-3">
+                    <h4 class="indicator">Market performance</h4>
+                  </div>
                 </div>
-                <div id="roomForChart" class="col-md-8">
-                  <canvas id="trChart" width="700" height="500"></canvas>
-                  <!-- <div class="ct-chart ct-perfect-fourth"></div> -->
-                </div>
-                
-                <div class="col-md-3 col-push-1">
-                  <div id="legendText"></div>
-                  <p id="riskText" class="" role="alert">A <b>low risk</b> portfolio would typically have a large amount invested in bonds with a smaller allocation to equities.
-                  </p>
+                <div class="row">
+                    <div class="col-md-1">
+                      <div class="letterP4">Amount in 000's of pounds</div>
+                    </div>
+                    <div id="roomForChart" class="col-md-8">
+                      <canvas id="trChart" width="700" height="500"></canvas>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <p class="text-center">Years</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-3 col-push-1">
+                      <div id="legendText"></div>
+                      <p id="riskText" class="" role="alert">A <b>low risk</b> portfolio would typically have a large amount invested in bonds with a smaller allocation to equities.
+                      </p>
+                    </div>
                 </div>
               </div>
+            </div>
+          </section> <!-- end of graph -->
+          <section>
+             <div class="row bg">
+               <div class="col-md-12">
+                 <h3 class="text-center"><a href="">View our Portfolios</a></h3>
+               </div>
+             </div>
           </section>
         </div> <!-- end of form's column -->
       </div> <!-- end of form's row -->

@@ -61,33 +61,6 @@ function NORMSINV(p) {
                              (((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
 }
 
-// function nsort(vals) {
-//   'use strict';
-//   return vals.sort(function (a, b) { return a - b; });
-// }
-
-// function percentile(vals, ptile) {
-//   'use strict';
-//   //vals = numbers(vals)
-//   if (vals.length === 0 || ptile === null || ptile < 0) {
-//     return NaN;
-// }
-
-//   // Fudge anything over 100 to 1.0
-//   if (ptile > 1) {
-//     ptile = 1;
-//   }
-//   vals = nsort(vals);
-//   var i = (vals.length * ptile) - 0.5;
-//   if ((i | 0) === i) {
-//     return vals[i];
-//   }
-//   // interpolated percentile -- using Estimation method
-//   var intPart = i | 0;
-//   var fract = i - intPart;
-//   return (1 - fract) * vals[intPart] + fract * vals[intPart + 1];
-// }
-
 function monteCarlo(initialValue, annualOutflow, monthlyReturn, monthlyStdDev) {
     'use strict';
     var result = [];
@@ -183,33 +156,37 @@ var pensionInt = 100000,pensionIntAnn = 5000;
 
 /* Event listener function for slider on load */
 
-  pensionSize.addEventListener('input', function(){
+  pensionSize.addEventListener('change', function(){
     'use strict';
     pensionInt = parseInt(pensionSize.value);
     pensionSize.setAttribute('value', pensionInt);
     pensionSizeText.setAttribute('value', pensionInt);
+    setInterval(createChart(), 400000);
   });
 
-  pensionSizeText.addEventListener('keyup', function() {
+  pensionSizeText.addEventListener('change', function() {
      'use strict';
      pensionInt = parseInt(pensionSizeText.value);
      pensionSize.value = pensionInt;
      pensionSize.setAttribute('value', pensionInt);
+     setInterval(createChart(), 400000);
   });
 
   
-  pensionAnnual.addEventListener('input', function(){
+  pensionAnnual.addEventListener('change', function(){
     'use strict';
     pensionIntAnn = parseInt(pensionAnnual.value);
     pensionAnnual.setAttribute('value', pensionIntAnn);
     pensionAnnualText.setAttribute('value', pensionIntAnn);
+    setInterval(createChart(), 400000);
   });
 
-  pensionAnnualText.addEventListener('keyup', function() {
+  pensionAnnualText.addEventListener('change', function() {
      'use strict';
      pensionIntAnn = parseInt(pensionAnnualText.value);
      pensionAnnual.value = pensionIntAnn;
      pensionAnnual.setAttribute('value', pensionIntAnn);
+     setInterval(createChart(), 400000);
   });
 
 
@@ -232,6 +209,7 @@ var dropdown = function() {
   var select = document.getElementById('portfolio-type');
   if(select.addEventListener){
      select.addEventListener('change',dropdown,false);
+     select.addEventListener('change',createChart,false);
   }
   else {
      select.attachEvent('onchange',dropdown,false);
@@ -258,7 +236,7 @@ var dropdown = function() {
         message = message + 'A <b>high risk</b> portfolio would typically be almost entirely invested in equities. ';
         break;
        default: 
-        message;
+        message = 'Bacon ipsum dolor amet short ribs bresaola ham pork belly, beef ribs sausage beef meatloaf hamburger sirloin alcatra boudin capicola jerky. ';
     }
 
     riskText.innerHTML = message;

@@ -217,9 +217,17 @@ var addClass = function(el,className){
   }
 };
 
+var enabledInputs = function(){
+  var inputs = document.getElementsByTagName('input');
+  for(var i = 0; i < inputs.length; i++){
+    inputs[i].disabled = false;
+  }
+};
+
 timeframe.addEventListener('click', function(){
   'use strict';
   timeFrame();
+  enabledInputs();
   addClass(yearsFromNow, 'display');
 });
 
@@ -267,9 +275,8 @@ var pensionSize = document.querySelector('#pension-size');
 var pensionAnnual = document.querySelector('#pension-annual');
 var pensionSizeText = document.querySelector('#pension-size-text');
 var pensionAnnualText = document.querySelector('#pension-annual-text');
-var pensionInt,pensionIntAnn;
-var initialValue = 100,
-    annualDrawdown = 5;
+var pensionInt = 100000,pensionIntAnn = 5000;
+
 
 /* Event listener function for slider on load */
 
@@ -278,7 +285,6 @@ var initialValue = 100,
     pensionInt = parseInt(pensionSize.value);
     pensionSize.setAttribute('value', pensionInt);
     pensionSizeText.setAttribute('value', pensionInt);
-    // console.log(pensionInt);
   });
 
   pensionSizeText.addEventListener('keyup', function() {
@@ -286,15 +292,9 @@ var initialValue = 100,
      pensionInt = parseInt(pensionSizeText.value);
      pensionSize.value = pensionInt;
      pensionSize.setAttribute('value', pensionInt);
-     initialValue = parseFloat(pensionSizeText.value.replace(',','')) / 1000;
-     window.alert(initialValue);
-     if (initialValue <= 2000 && initialValue >= 20) {
-          // updateChart();
-      }
-     return initialValue;
-     // updateChart();
   });
 
+  
   pensionAnnual.addEventListener('input', function(){
     'use strict';
     pensionIntAnn = parseInt(pensionAnnual.value);
@@ -307,7 +307,6 @@ var initialValue = 100,
      pensionIntAnn = parseInt(pensionAnnualText.value);
      pensionAnnual.value = pensionIntAnn;
      pensionAnnual.setAttribute('value', pensionIntAnn);
-     return pensionIntAnn;
   });
 
 
@@ -338,29 +337,25 @@ var dropdown = function() {
   if(select.value) {
     thisValue = select.value;
 
-    // window.alert(select.value);
     thisVal = thisValue.toString();
-    //window.alert(thisVal);
    
     var message = '';
 
     // Check what risk category is selected
     switch(thisVal) {
-      case 'cash-portfolio':
-      case 'gilts-portfolio':
+      case 'low-investment-risk':
+      
         message = message + 'A <b>low risk</b> portfolio would typically have a large amount invested in bonds with a smaller allocation to equities. ';
         break;
+    
       case 'moderate-investment-risk':
-      case 'low-investment-risk':
-      case 'high-investment-risk':
         message = message + 'A <b>medium risk</b> portfolio would typically have a large amount invested in equities with a smaller allocation to bonds. ';
         break;
-      case 'uk-equity-portfolio':
-      case 'global-equity-portfolio':
+     case 'high-investment-risk':
         message = message + 'A <b>high risk</b> portfolio would typically be almost entirely invested in equities. ';
         break;
        default: 
-        message = 'Risk risky';
+        message;
     }
 
     riskText.innerHTML = message;
@@ -449,6 +444,7 @@ function legend(parent, data) {
 var paramss = [];
 var labs = [], data1 = [], data2 = [], data3 = [], data4 =[], median = [];
 var lineChart;
+var initialValue = 100000, annualDrawdown = 20000;
 
 var createChart = function() {
     'use strict';
@@ -457,10 +453,11 @@ var createChart = function() {
 
     var monthlyRet = Math.pow((1 + 0.0618 - infl), 1/12) - 1;
     var monthlySd = 0.103 / Math.sqrt(12);
-
-    var monteC = monteCarlo(initialValue,annualDrawdown,monthlyRet,monthlySd);
-    
-
+    initialValue = pensionInt / 1000;
+    annualDrawdown = pensionIntAnn / 1000;
+    paramss = dropdown();
+    var monteC = monteCarlo(initialValue,annualDrawdown,paramss[0],paramss[1]);
+  
     labs[0] = 0;
     data1[0] = initialValue;
     data2[0] = initialValue;
@@ -508,8 +505,6 @@ var createChart = function() {
   for ( var item in data4 ) {
     numeric_array4.push( data4[ item ] );
   }
-
-  console.log(numeric_array1);
 
   var barData = {
     labels : labs,
@@ -587,46 +582,19 @@ window.onload = function(){
   createChart();
 };
 
-var updateChart = function(){
-    'use strict';
-    paramss = dropdown();
-    var monteC = monteCarlo(initialValue,annualDrawdown,paramss[0],paramss[1]);
-    createChart();
-    var ds = lineChart.datasets;
-    console.log(initialValue);
-    ds[0].points[0].value = initialValue;
-    ds[1].points[0].value = initialValue;
-    ds[2].points[0].value = initialValue;
-    ds[3].points[0].value = initialValue;
-    ds[4].points[0].value = initialValue;
+var resetButton = document.getElementsByClassName('reset');
 
-    for (var i = 1; i <= 100; i++) {
-      ds[0].points[i].value = monteC[i - 1][4];
-      ds[1].points[i].value = monteC[i - 1][3];
-      ds[2].points[i].value = monteC[i - 1][2];
-      ds[3].points[i].value = monteC[i - 1][1];
-      ds[4].points[i].value = monteC[i - 1][0];
-    }
-    
-    lineChart.update();
+for (var i = 0; i < resetButton.length; i++) {
+  resetButton[i].addEventListener('click', function(){
+    'use strict';
+    createChart();
+  });
 };
 
-var updateButton = document.getElementById('update-chart');
 
-updateButton.addEventListener('click', function(){
-  'use strict';
-   updateChart();
-});
 
-// var chart = new Chartist.Line('.ct-chart', {
-//       labels: [1, 2, 3, 4, 5, 6, 7, 8],
-//       series: [
-//         [105, 9, 7, 8, 5, 3, 5, 4]
-//       ]
-//     }, {
-//       low: 0,
-//       showArea: true
-//   });
+
+
 
 
 

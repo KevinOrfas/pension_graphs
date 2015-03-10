@@ -23,6 +23,10 @@ body {
     padding: 0;
 }
 
+#times {
+    display: none;
+}
+
 header {
     background-color: #37424A;
     background-image: url('https://www.brewin.co.uk/assets/img/logo/brewin-dolphin-hallmark-logo.png');
@@ -36,6 +40,18 @@ header {
         color: #fff;
         margin-top: 0;
     }*/
+}
+
+h3 {
+    margin-top: 0;
+}
+
+/*h1 {
+    margin-bottom: .1em;
+}*/
+
+p {
+    margin-bottom: 1em;
 }
 
 h1 {
@@ -63,8 +79,6 @@ h3 {
 .btn-timeframe {
     background: #649EAE;
     color: #fff;
-    float: right;
-    margin-left: 1em;
     &:hover {
         background: lighten(#649EAE, 10%);
         color: #fff;
@@ -74,31 +88,28 @@ h3 {
 .year-form-now {
     display: none;
     font-size: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 0;
 }
 
 .display {
     display: block;
 }
 
-#update-chart {
-    margin: 0 0 25em 0;
-
+.reset {
+    float: right;
+    background: #649EAE;
+    &:hover {
+        background: lighten(#649EAE, 10%);
+        color: #fff;
+    }
 }
 
-
-
 #riskText {
-    /*margin-top: 12em;*/
+    
     font-size: 1.5em;
-   
-        bottom: auto;
-        height: 50%; 
-        left:0;
-        margin: auto;
-        position: absolute;
-        right:0;
-        top:auto;
-        width: 100%;
+    position: absolute;
+    bottom: -400px;
   
 }
 
@@ -124,7 +135,7 @@ body {
 }
 
 .valign {
-    margin: 2.9em 0 0 0;
+    /*margin: 2.9em 0 0 0;*/
 }
 
 
@@ -137,8 +148,8 @@ input[type=range] {
     border: 1px solid white;
     
     /*required for proper track sizing in FF*/
-    /*width: 300px;*/
-    margin: 1em 0;
+    
+    /*margin: 1em 0;*/
 }
 input[type=range]::-webkit-slider-runnable-track {
     /*width: 300px;*/

@@ -6,15 +6,6 @@ var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
-gulp.task('fileinclude', function() {
-  gulp.src(['**/*.html'])
-    .pipe(fileinclude({
-      prefix: '@@',
-      basepath: '@file'
-    }))
-    .pipe(gulp.dest('dist/'));
-});
-
 gulp.task('styles', function () {
   return gulp.src('app/styles/main.scss')
     .pipe($.sass({
@@ -124,7 +115,7 @@ gulp.task('wiredep', function () {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['jshint', 'html', 'images', 'fonts', 'extras', 'fileinclude'], function () {
+gulp.task('build', ['jshint', 'html', 'images', 'fonts', 'extras'], function () {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 

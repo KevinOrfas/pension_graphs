@@ -35,20 +35,11 @@ header {
     background-position: center;
     height: 150px;
     padding-bottom: 1em;
-    /*h2 {
-        padding: 2em;
-        color: #fff;
-        margin-top: 0;
-    }*/
 }
 
 h3 {
     margin-top: 0;
 }
-
-/*h1 {
-    margin-bottom: .1em;
-}*/
 
 p {
     margin-bottom: 1em;
@@ -69,31 +60,9 @@ h3 {
     position: relative;
 }
 
-
-
 .nopadding {
    padding: 0 !important;
    margin: 0 !important;
-}
-
-.btn-timeframe {
-    background: #649EAE;
-    color: #fff;
-    &:hover {
-        background: lighten(#649EAE, 10%);
-        color: #fff;
-    }
-}
-
-.year-form-now {
-    display: none;
-    font-size: 1.5em;
-    margin-top: 1em;
-    margin-bottom: 0;
-}
-
-.display {
-    display: block;
 }
 
 .reset {
@@ -106,39 +75,10 @@ h3 {
 }
 
 #riskText {
-    
     font-size: 1.5em;
     position: absolute;
     bottom: -400px;
-  
 }
-
-
-
-.nr {
-  background: #25ba2e;
-  /*float: left;*/
-  display: inline-block;
-  padding: .5em;
-  border-radius: 100%;
-
-}
-
-.number-title {
-  width: 80%;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-body {
-    padding: 30px;
-}
-
-.valign {
-    /*margin: 2.9em 0 0 0;*/
-}
-
-
 
 input[type=range] {
     /*removes default webkit styles*/
@@ -146,10 +86,7 @@ input[type=range] {
     
     /*fix for FF unable to apply focus style bug */
     border: 1px solid white;
-    
-    /*required for proper track sizing in FF*/
-    
-    /*margin: 1em 0;*/
+ 
 }
 input[type=range]::-webkit-slider-runnable-track {
     /*width: 300px;*/
@@ -186,7 +123,7 @@ input[type=range]::-moz-range-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: goldenrod;
+    background: #649EAE;
 }
 
 /*hide the outline behind the border*/
@@ -222,7 +159,7 @@ input[type=range]::-ms-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: goldenrod;
+    background: #649EAE;
 }
 input[type=range]:focus::-ms-fill-lower {
     background: #888;
@@ -232,20 +169,15 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .letterP4 {    
-  -webkit-transform: rotate(-90deg); 
-     -moz-transform: rotate(-90deg); 
-      -ms-transform: rotate(-90deg); 
-       -o-transform: rotate(-90deg); 
-          transform: rotate(-90deg);
-            color: #000;
-            height: 250px;
-            width: 280px;
+    transform: rotate(-90deg);
+    color: #000;
+    height: 250px;
+    width: 280px;
     float: left;
     vertical-align:top;
 }
 .legend {
     width: 15em;
-    /*border: 1px solid black;*/
 }
 
 .legend .title {

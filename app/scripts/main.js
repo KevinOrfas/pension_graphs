@@ -236,7 +236,7 @@ var dropdown = function() {
         message = message + 'A <b>high risk</b> portfolio would typically be almost entirely invested in equities. ';
         break;
        default: 
-        message = 'Bacon ipsum dolor amet short ribs bresaola ham pork belly, beef ribs sausage beef meatloaf hamburger sirloin alcatra boudin capicola jerky. ';
+        message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pretium tellus nibh, eget molestie tortor rutrum. ';
     }
 
     riskText.innerHTML = message;

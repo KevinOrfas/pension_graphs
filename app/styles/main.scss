@@ -89,6 +89,10 @@ h3 {
     bottom: -400px;
 }
 
+.subheading {
+    padding-left: .7em;
+}
+
 input[type=range] {
     /*removes default webkit styles*/
     -webkit-appearance: none;

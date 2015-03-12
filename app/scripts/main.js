@@ -161,7 +161,9 @@ var pensionInt = 100000,pensionIntAnn = 5000;
     pensionInt = parseInt(pensionSize.value);
     pensionSize.setAttribute('value', pensionInt);
     pensionSizeText.setAttribute('value', pensionInt);
-    setInterval(createChart(), 400000);
+    lineChart.destroy();
+    window.setTimeout(createChart(), 2000);
+
   });
 
   pensionSizeText.addEventListener('change', function() {
@@ -169,7 +171,8 @@ var pensionInt = 100000,pensionIntAnn = 5000;
      pensionInt = parseInt(pensionSizeText.value);
      pensionSize.value = pensionInt;
      pensionSize.setAttribute('value', pensionInt);
-     setInterval(createChart(), 400000);
+     lineChart.destroy();
+     window.setTimeout(createChart(), 2000);
   });
 
   
@@ -178,7 +181,8 @@ var pensionInt = 100000,pensionIntAnn = 5000;
     pensionIntAnn = parseInt(pensionAnnual.value);
     pensionAnnual.setAttribute('value', pensionIntAnn);
     pensionAnnualText.setAttribute('value', pensionIntAnn);
-    setInterval(createChart(), 400000);
+    lineChart.destroy();
+    window.setTimeout(createChart(), 2000);
   });
 
   pensionAnnualText.addEventListener('change', function() {
@@ -186,6 +190,7 @@ var pensionInt = 100000,pensionIntAnn = 5000;
      pensionIntAnn = parseInt(pensionAnnualText.value);
      pensionAnnual.value = pensionIntAnn;
      pensionAnnual.setAttribute('value', pensionIntAnn);
+     lineChart.destroy();
      setInterval(createChart(), 400000);
   });
 
@@ -360,30 +365,19 @@ var createChart = function() {
      }
   }
 
-  var numeric_array1 = [];
-  for ( var item in data1 ) {
-    numeric_array1.push( data1[ item ] );
-  }
-
-  var numeric_array2 = [];
-  for ( var item in data2 ) {
-    numeric_array2.push( data2[ item ] );
-  }
-
-  var numeric_median = [];
-  for ( var item in median ) {
-    numeric_median.push( median[ item ] );
-  }
-
-  var numeric_array3 = [];
-  for ( var item in data3 ) {
-    numeric_array3.push( data3[ item ] );
-  }
-
-  var numeric_array4 = [];
-  for ( var item in data4 ) {
-    numeric_array4.push( data4[ item ] );
-  }
+  var numArray1 = [], numArray2 = [], numArrayM = [], numArray3 = [], numArray4 = [];
+  var createNumArray = function(numArray,data){
+    for ( var item in data ) {
+      numArray.push( data[ item ] );
+    }
+    return numArray;
+  };
+  
+  numArray1 = createNumArray(numArray1,data1);
+  numArray2 = createNumArray(numArray2,data2);
+  numArrayM = createNumArray(numArrayM,median);
+  numArray3 = createNumArray(numArray3,data3);
+  numArray4 = createNumArray(numArray4,data4);
 
   var barData = {
     labels : labs,
@@ -396,7 +390,7 @@ var createChart = function() {
         pointStrokeColor: '#fff',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(220,220,220,1)',
-        data: numeric_array1
+        data: numArray1
       },
       {
         label: 'Expected - 60%',
@@ -406,7 +400,7 @@ var createChart = function() {
         pointStrokeColor: '#fff',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(151,187,205,1)',
-        data: numeric_array2
+        data: numArray2
       },
       {
         label: 'Median',
@@ -416,7 +410,7 @@ var createChart = function() {
         pointStrokeColor: '#fff',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(151,187,205,1)',
-        data: numeric_median
+        data: numArrayM
       },
       {
         label: 'Poor - 15%',
@@ -426,7 +420,7 @@ var createChart = function() {
         pointStrokeColor: '#fff',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(151,187,205,1)',
-        data: numeric_array3
+        data: numArray3
       },
       {
         label: 'Very Poor 5%',
@@ -436,13 +430,14 @@ var createChart = function() {
         pointStrokeColor: '#fff',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(151,187,205,1)',
-        data: numeric_array4
+        data: numArray4
       }
     ]
   };
 
   var cht = document.getElementById('trChart');
   var ctx = cht.getContext('2d');
+  
   lineChart = new Chart(ctx).Line(barData, {
           bezierCurve: false,
           pointDot : false,
@@ -460,16 +455,6 @@ window.onload = function(){
   'use strict';
   createChart();
 };
-
-var resetButton = document.getElementsByClassName('reset');
-
-for (var i = 0; i < resetButton.length; i++) {
-  resetButton[i].addEventListener('click', function(){
-    'use strict';
-    createChart();
-  });
-};
-
 
 
 
